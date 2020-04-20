@@ -40,8 +40,8 @@ export const getDiffScripts = async (): Promise<string[]> => {
   const diff = await getDiff(cmdOptions)
   const diffedFiles = diff.files.map(elem => elem.file)
 
-  core.info(`diff options: ${cmdOptions}`)
-  core.info(`files returned: ${diffedFiles}`)
+  core.info(`diff options: ${cmdOptions.join(' ')}`)
+  core.info(`files returned: ${diffedFiles.join(' ')}`)
 
   return diffedFiles
 }
@@ -54,8 +54,8 @@ export const getDiffEnvs = async (): Promise<string[]> => {
   const diff = await getDiff(cmdOptions)
   const diffedFiles = diff.files.map(elem => elem.file)
 
-  core.info(`diff options: ${cmdOptions}`)
-  core.info(`files returned: ${diffedFiles}`)
+  core.info(`diff options: ${cmdOptions.join(' ')}`)
+  core.info(`files returned: ${diffedFiles.join(' ')}`)
 
   return diffedFiles
 }
@@ -70,8 +70,8 @@ export const getDiffCommon = async (): Promise<string[]> => {
   const diff = await getDiff(cmdOptions)
   const diffedFiles = diff.files.map(elem => elem.file)
 
-  core.info(`diff options: ${cmdOptions}`)
-  core.info(`files returned: ${diffedFiles}`)
+  core.info(`diff options: ${cmdOptions.join(' ')}`)
+  core.info(`files returned: ${diffedFiles.join(' ')}`)
 
   return diffedFiles
 }
@@ -84,8 +84,8 @@ export const getDiffComponentEnvs = async (): Promise<string[]> => {
   const diff = await getDiff(cmdOptions)
   const diffedFiles = diff.files.map(elem => elem.file)
 
-  core.info(`diff options: ${cmdOptions}`)
-  core.info(`files returned: ${diffedFiles}`)
+  core.info(`diff options: ${cmdOptions.join(' ')}`)
+  core.info(`files returned: ${diffedFiles.join(' ')}`)
 
   return diffedFiles.filter(file => file.endsWith(`${ENV}.tfvars`))
 }
@@ -99,8 +99,8 @@ export const getDiffComponents = async (): Promise<string[]> => {
   const diff = await getDiff(cmdOptions)
   const components = diff.files.map(elem => getComponentName(elem.file))
 
-  core.info(`diff options: ${cmdOptions}`)
-  core.info(`files returned: ${components}`)
+  core.info(`diff options: ${cmdOptions.join(' ')}`)
+  core.info(`files returned: ${components.join(' ')}`)
 
   const uniqueComponents = [...new Set(components)]
 

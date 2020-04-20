@@ -2712,8 +2712,8 @@ exports.getDiffScripts = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions}`);
-    core.info(`files returned: ${diffedFiles}`);
+    core.info(`diff options: ${cmdOptions.join(' ')}`);
+    core.info(`files returned: ${diffedFiles.join(' ')}`);
     return diffedFiles;
 });
 exports.getDiffEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2723,8 +2723,8 @@ exports.getDiffEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions}`);
-    core.info(`files returned: ${diffedFiles}`);
+    core.info(`diff options: ${cmdOptions.join(' ')}`);
+    core.info(`files returned: ${diffedFiles.join(' ')}`);
     return diffedFiles;
 });
 exports.getDiffCommon = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2736,8 +2736,8 @@ exports.getDiffCommon = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions}`);
-    core.info(`files returned: ${diffedFiles}`);
+    core.info(`diff options: ${cmdOptions.join(' ')}`);
+    core.info(`files returned: ${diffedFiles.join(' ')}`);
     return diffedFiles;
 });
 exports.getDiffComponentEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2747,8 +2747,8 @@ exports.getDiffComponentEnvs = () => __awaiter(void 0, void 0, void 0, function*
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions}`);
-    core.info(`files returned: ${diffedFiles}`);
+    core.info(`diff options: ${cmdOptions.join(' ')}`);
+    core.info(`files returned: ${diffedFiles.join(' ')}`);
     return diffedFiles.filter(file => file.endsWith(`${exports.ENV}.tfvars`));
 });
 exports.getDiffComponents = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2759,8 +2759,8 @@ exports.getDiffComponents = () => __awaiter(void 0, void 0, void 0, function* ()
     ];
     const diff = yield getDiff(cmdOptions);
     const components = diff.files.map(elem => getComponentName(elem.file));
-    core.info(`diff options: ${cmdOptions}`);
-    core.info(`files returned: ${components}`);
+    core.info(`diff options: ${cmdOptions.join(' ')}`);
+    core.info(`files returned: ${components.join(' ')}`);
     const uniqueComponents = [...new Set(components)];
     return uniqueComponents.filter(elem => isEnvInComponent(elem));
 });
