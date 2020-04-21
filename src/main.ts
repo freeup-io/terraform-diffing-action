@@ -6,11 +6,11 @@ async function run(): Promise<void> {
     core.debug('Parsing rules in the yaml manifest.')
 
     if (
-      finder.getDiffScripts() ||
-      finder.getDiffEnvs() ||
-      finder.getDiffCommon() ||
-      finder.getDiffComponentEnvs() ||
-      finder.getDiffComponents()
+      await finder.getDiffScripts() ||
+      await finder.getDiffEnvs() ||
+      await finder.getDiffCommon() ||
+      await finder.getDiffComponentEnvs() ||
+      await finder.getDiffComponents()
     ) {
       core.info('Diffing rule detected changes.')
       core.exportVariable('DIFF_DETECTED', 'true')
