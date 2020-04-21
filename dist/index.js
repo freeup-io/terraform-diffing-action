@@ -2370,11 +2370,23 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug('Parsing rules in the yaml manifest.');
-            if ((yield finder.getDiffScripts()).length > 0 ||
-                (yield finder.getDiffEnvs()).length > 0 ||
-                (yield finder.getDiffCommon()).length > 0 ||
-                (yield finder.getDiffComponentEnvs()).length > 0 ||
-                (yield finder.getDiffComponents()).length > 0) {
+            var diffFound = false;
+            if ((yield finder.getDiffScripts()).length > 0) {
+                diffFound = true;
+            }
+            else if ((yield finder.getDiffEnvs()).length > 0) {
+                diffFound = true;
+            }
+            else if ((yield finder.getDiffCommon()).length > 0) {
+                diffFound = true;
+            }
+            else if ((yield finder.getDiffComponentEnvs()).length > 0) {
+                diffFound = true;
+            }
+            else if ((yield finder.getDiffComponents()).length > 0) {
+                diffFound = true;
+            }
+            if (diffFound) {
                 core.info('Diffing rule detected changes.');
                 core.exportVariable('DIFF_DETECTED', 'true');
             }
@@ -2712,8 +2724,7 @@ exports.getDiffScripts = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions.join(' ')}`);
-    core.info(`files returned: ${diffedFiles.join(' ')}`);
+    printDiffResults(cmdOptions, diffedFiles);
     return diffedFiles;
 });
 exports.getDiffEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2723,8 +2734,7 @@ exports.getDiffEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions.join(' ')}`);
-    core.info(`files returned: ${diffedFiles.join(' ')}`);
+    printDiffResults(cmdOptions, diffedFiles);
     return diffedFiles;
 });
 exports.getDiffCommon = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2736,8 +2746,7 @@ exports.getDiffCommon = () => __awaiter(void 0, void 0, void 0, function* () {
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions.join(' ')}`);
-    core.info(`files returned: ${diffedFiles.join(' ')}`);
+    printDiffResults(cmdOptions, diffedFiles);
     return diffedFiles;
 });
 exports.getDiffComponentEnvs = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2747,8 +2756,7 @@ exports.getDiffComponentEnvs = () => __awaiter(void 0, void 0, void 0, function*
     ];
     const diff = yield getDiff(cmdOptions);
     const diffedFiles = diff.files.map(elem => elem.file);
-    core.info(`diff options: ${cmdOptions.join(' ')}`);
-    core.info(`files returned: ${diffedFiles.join(' ')}`);
+    printDiffResults(cmdOptions, diffedFiles);
     return diffedFiles.filter(file => file.endsWith(`${exports.ENV}.tfvars`));
 });
 exports.getDiffComponents = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2759,11 +2767,15 @@ exports.getDiffComponents = () => __awaiter(void 0, void 0, void 0, function* ()
     ];
     const diff = yield getDiff(cmdOptions);
     const components = diff.files.map(elem => getComponentName(elem.file));
-    core.info(`diff options: ${cmdOptions.join(' ')}`);
-    core.info(`files returned: ${components.join(' ')}`);
     const uniqueComponents = [...new Set(components)];
-    return uniqueComponents.filter(elem => isEnvInComponent(elem));
+    const filteredComponents = uniqueComponents.filter(elem => isEnvInComponent(elem));
+    printDiffResults(cmdOptions, filteredComponents);
+    return filteredComponents;
 });
+function printDiffResults(diffOptions, diffResults) {
+    core.info(`  -> diff options: ${diffOptions.join(' ')}`);
+    core.info(`  -> diff results: ${diffResults.join(' ')}`);
+}
 function getComponentName(path) {
     return path.includes('/') ? path.split('/')[2] : path;
 }
