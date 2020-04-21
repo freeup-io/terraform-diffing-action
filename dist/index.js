@@ -2370,11 +2370,11 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.debug('Parsing rules in the yaml manifest.');
-            if ((yield finder.getDiffScripts()) ||
-                (yield finder.getDiffEnvs()) ||
-                (yield finder.getDiffCommon()) ||
-                (yield finder.getDiffComponentEnvs()) ||
-                (yield finder.getDiffComponents())) {
+            if ((yield finder.getDiffScripts()).length > 0 ||
+                (yield finder.getDiffEnvs()).length > 0 ||
+                (yield finder.getDiffCommon()).length > 0 ||
+                (yield finder.getDiffComponentEnvs()).length > 0 ||
+                (yield finder.getDiffComponents()).length > 0) {
                 core.info('Diffing rule detected changes.');
                 core.exportVariable('DIFF_DETECTED', 'true');
             }
